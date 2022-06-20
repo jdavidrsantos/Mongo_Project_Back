@@ -25,5 +25,23 @@ module.exports = {
                     resolve(result.length > 0)
                 })
         })
+    },
+
+    login(email, password) {
+        return new Promise(resolve => {
+            connection.query(`SELECT * FROM users where email = '${email}' and password = '${password}'`,
+                function (error, result) {
+                    console.log(result)
+                    if (result.length) {
+                        resolve(result[0])
+                    } else {
+                        resolve(false)
+                    }
+                })
+        })
     }
+
 }
+
+
+
