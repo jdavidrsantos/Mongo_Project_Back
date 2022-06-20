@@ -1,0 +1,19 @@
+{
+  "name": "ilercon_back",
+  "version": "1.0.0",
+  "description": "ilercon backend",
+  "main": "app.js",
+  "scripts": {
+    "serve": "nodemon src/app.js"
+  },
+  "author": "jdavidrsantos",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
