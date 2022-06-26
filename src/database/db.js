@@ -20,9 +20,11 @@ module.exports = {
         })
     },
 
-    getUserByEmail(email) {
+
+
+    codeValidator(code, user_id) {
         return new Promise(resolve => {
-            connection.query(`SELECT * FROM users where email = '${email}'`,
+            connection.query(`SELECT * FROM users where recover_code = '${code}' AND id ='${user_id}'`,
                 function (error, result) {
                     if (result.length > 0) {
                         resolve(result[0])
@@ -33,9 +35,7 @@ module.exports = {
         })
     },
 
-    setUserRecoverCode(id, code) {
-        connection.query(`UPDATE users set recover_code = '${code}' where id = ${id}`)
-    },
+
 
 
 
@@ -44,10 +44,26 @@ module.exports = {
             connection.query(`INSERT INTO users (name, email, password) VALUES ('${user.name}', '${user.email}', '${user.password}')`,
                 (uy, ui, y5) => {
                     resolve(ui.insertId)
-                    console.log("soy ui create user", resolve)
+                    // console.log("soy ui create user", resolve)
                 })
         })
     },
+
+
+    getUserByEmail(email) {
+        return new Promise(resolve => {
+            connection.query(`SELECT * FROM users where email = '${email}'`,
+                function (error, result) {
+                    if (result.length > 0) {
+                        resolve(result[0])
+                        console.log("soy el resolve de getuserbyemail", (result[0]))
+                    } else {
+                        resolve(false)
+                    }
+                })
+        })
+    },
+
 
     userExist(email) {
         return new Promise(resolve => {
@@ -61,11 +77,24 @@ module.exports = {
 
 
 
+    updatePassword(id, password) {
+        connection.query(`UPDATE users set password = '${password}' where id = ${id}`)
+    },
+
+
+
+
+
+    setUserRecoverCode(id, code) {
+        connection.query(`UPDATE users set recover_code = '${code}' where id = ${id}`)
+
+    },
+
+
     login(email, password) {
         return new Promise(resolve => {
             connection.query(`SELECT * FROM users where email = '${email}' and password = '${password}'`,
                 function (error, result) {
-                    console.log(result)
                     if (result.length) {
                         resolve(result[0])
                     } else {

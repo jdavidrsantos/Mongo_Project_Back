@@ -8,20 +8,17 @@ app.use(cors())
 const port = 3000
 
 const db = require('./database/db')
+const { codeValidator } = require('./database/db')
 
 // app.set('view engine', 'ejs');
 // app.use(express.static('public'));
-
-
 
 // app.get('/', function (req, res) {
 //     res.render('index');
 // });
 
 
-
 app.get('/users', (req, res) => {
-
     res.send('hello world!')
 })
 
@@ -63,21 +60,17 @@ app.post('/login', function (request, response) {
     })
 });
 
-
-
 app.post('/password_recovery', async (req, res) => {
     console.log("soy req body", req.body)
     const user = await db.getUserByEmail(req.body.email);
-    console.log(user)
+    console.log("soy user", user)
     if (user !== false) {
         function generateRandomIntegerInRange(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
         console.log('existe, res.json')
-
-        let code = generateRandomIntegerInRange(100, 999);
+        let code = generateRandomIntegerInRange(100, 100);
         db.setUserRecoverCode(user.id, code)
-
         res.json({
             user_id: user.id,
         })
@@ -94,9 +87,25 @@ app.post('/password_recovery', async (req, res) => {
         console.log('error')
     }
 })
-
-
-
-
-
 // generar codigo random en la base de datos 
+
+
+app.post('/codeValidator', async (req, res) => {
+    const password = (req.body.password);
+    const user_id = (req.body.user_id);
+    const code = (req.body.code);
+    console.log("Soy la password copiada en front", password)
+    console.log("Soy el user id en front", user_id)
+    const code_Email = await db.codeValidator(code, user_id);
+    if (code_Email !== false) {
+        console.log("soy code", code_Email)
+        db.updatePassword(user_id, password)
+        res.json({
+            user_id: user_id,
+        })
+    }
+    else {
+        res.status(422).json({ error: 'User does not exits' })
+    }
+});
+
