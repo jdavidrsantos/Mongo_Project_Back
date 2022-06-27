@@ -1,26 +1,19 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-
 const app = express()
 app.use(bodyParser.json())
 app.use(cors())
 const port = 3000
-
+const path = require('path')
 const db = require('./database/db')
+const mailer = require('./routes/emailer')
 const { codeValidator } = require('./database/db')
 
-// app.set('view engine', 'ejs');
-// app.use(express.static('public'));
-
-// app.get('/', function (req, res) {
-//     res.render('index');
-// });
-
-
-app.get('/users', (req, res) => {
-    res.send('hello world!')
-})
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json());
+// app.use(require('./routes/emailer'))
+// app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.post('/register', async (req, res) => {
@@ -34,10 +27,6 @@ app.post('/register', async (req, res) => {
     }
 })
 
-
-app.post('/recovery-password', (req, res) => {
-    res.send('login')
-})
 
 
 app.listen(port, () => {
@@ -69,8 +58,9 @@ app.post('/password_recovery', async (req, res) => {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
         console.log('existe, res.json')
-        let code = generateRandomIntegerInRange(100, 100);
+        let code = generateRandomIntegerInRange(1000, 9999);
         db.setUserRecoverCode(user.id, code)
+        mailer.sendPasswordCodeToEmail(user, code)
         res.json({
             user_id: user.id,
         })
@@ -108,4 +98,6 @@ app.post('/codeValidator', async (req, res) => {
         res.status(422).json({ error: 'User does not exits' })
     }
 });
+
+
 
