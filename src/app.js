@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -10,13 +11,14 @@ const db = require('./database/db')
 const mailer = require('./routes/emailer')
 const { codeValidator } = require('./database/db')
 
+
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json());
 // app.use(require('./routes/emailer'))
 // app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.post('/register', async (req, res) => {
+app.post('/api/register', async (req, res) => {
     const userExist = await db.userExist(req.body.email);
     if (!userExist) {
         db.createUser(req.body).then((result) => {
@@ -34,7 +36,7 @@ app.listen(port, () => {
 })
 
 
-app.post('/login', function (request, response) {
+app.post('/api/login', function (request, response) {
     // Capture the input fields
     let username = request.body.name;
     console.log("request", request)
@@ -49,7 +51,7 @@ app.post('/login', function (request, response) {
     })
 });
 
-app.post('/password_recovery', async (req, res) => {
+app.post('/api/password_recovery', async (req, res) => {
     console.log("soy req body", req.body)
     const user = await db.getUserByEmail(req.body.email);
     console.log("soy user", user)
@@ -80,7 +82,7 @@ app.post('/password_recovery', async (req, res) => {
 // generar codigo random en la base de datos 
 
 
-app.post('/codeValidator', async (req, res) => {
+app.post('/api/codeValidator', async (req, res) => {
     const password = (req.body.password);
     const user_id = (req.body.user_id);
     const code = (req.body.code);
