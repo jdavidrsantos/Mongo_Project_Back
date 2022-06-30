@@ -38,7 +38,6 @@ module.exports = {
 
 
 
-
     createUser(user) {
         return new Promise(resolve => {
             connection.query(`INSERT INTO users (name, email, password) VALUES ('${user.name}', '${user.email}', '${user.password}')`,
