@@ -110,7 +110,7 @@ app.post('/api/contact_us', async (req, res) => {
     console.log("Soy el mensaje en front", contact_subject)
     if (contact_names !== '' && contact_email !== '' && contact_phone !== '' && contact_message !== '') {
         console.log('paso')
-        // mailerContact.sendPasswordCodeToEmail(contact_names, contact_subject, contact_email, contact_phone, contact_message)
+        mailerContact.sendPasswordCodeToEmail(contact_names, contact_subject, contact_email, contact_phone, contact_message)
         res.json({ form: true })
     }
     else {
