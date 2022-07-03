@@ -9,6 +9,7 @@ const port = 3000
 const path = require('path')
 const db = require('./database/db')
 const mailer = require('./routes/emailer')
+const mailerContact = require('./routes/emailContact')
 const { codeValidator } = require('./database/db')
 
 
@@ -69,18 +70,11 @@ app.post('/api/password_recovery', async (req, res) => {
     }
 
 
-    // db.createRecoveryPassword(req.body).then((result) => {
-    //     res.json({ recover_code: result })
-    // })
-
-
     else {
         res.status(421).json({ error: 'User does not exits' })
         console.log('error')
     }
 })
-// generar codigo random en la base de datos 
-
 
 app.post('/api/codeValidator', async (req, res) => {
     const password = (req.body.password);
@@ -103,3 +97,23 @@ app.post('/api/codeValidator', async (req, res) => {
 
 
 
+
+
+app.post('/api/contact_us', async (req, res) => {
+    const contact_names = (req.body.name);
+    const contact_subject = (req.body.subject);
+    const contact_email = (req.body.email);
+    const contact_phone = (req.body.phone);
+    const contact_message = (req.body.message);
+    console.log("Soy el nombre copiado en front", contact_names)
+    console.log("Soy el mensaje en front", contact_message)
+    console.log("Soy el mensaje en front", contact_subject)
+    if (contact_names !== '' && contact_email !== '' && contact_phone !== '' && contact_message !== '') {
+        console.log('paso')
+        // mailerContact.sendPasswordCodeToEmail(contact_names, contact_subject, contact_email, contact_phone, contact_message)
+        res.json({ form: true })
+    }
+    else {
+        res.status(422).json({ error: 'Formulario no enviado' })
+    }
+});
