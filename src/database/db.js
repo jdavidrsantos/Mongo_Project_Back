@@ -1,6 +1,6 @@
 const mysql = require('mysql')
 
-console.log({ user: process.env.DB_USER, db: process.env.DB_DATABASE, pass: process.env.DB_PASSWORD })
+// console.log({ user: process.env.DB_USER, db: process.env.DB_DATABASE, pass: process.env.DB_PASSWORD })
 const connection = mysql.createConnection({
     host: 'localhost',
     user: process.env.DB_USER,
@@ -12,16 +12,15 @@ connection.connect();
 
 module.exports = {
 
-    createRecoveryPassword(password) {
-        return new Promise(resolve => {
-            connection.query(`INSERT INTO users (recover_code) VALUES ('${password.recover_code}')`,
-                (uy, ui, y5) => {
-                    resolve(ui.insert.yes)
-                    console.log("soy ui", resolve)
-                })
-        })
-    },
-
+    // createRecoveryPassword(password) {
+    //     return new Promise(resolve => {
+    //         connection.query(`INSERT INTO users (recover_code) VALUES ('${password.recover_code}')`,
+    //             (uy, ui, y5) => {
+    //                 resolve(ui.insert.yes)
+    //                 console.log("soy ui", resolve)
+    //             })
+    //     })
+    // },
 
 
     codeValidator(code, user_id) {
@@ -45,7 +44,7 @@ module.exports = {
             connection.query(`INSERT INTO users (name, email, password) VALUES ('${user.name}', '${user.email}', '${user.password}')`,
                 (uy, ui, y5) => {
                     resolve(ui.insertId)
-                    // console.log("soy ui create user", resolve)
+                    console.log("soy ui create user", ui)
                 })
         })
     },
@@ -103,8 +102,40 @@ module.exports = {
                     }
                 })
         })
-    }
+    },
+
+
+    userFacebook(name, email, id) {
+        return new Promise(resolve => {
+            connection.query(`INSERT INTO users (name, email, password, facebookID) VALUES ('${name}', '${email}', '', '${id}')`,
+                function (error, results, fields) {
+                    console.log(results)
+                    console.log("soy results userfacebook", results)
+                    resolve(results.insertId)
+                    console.log("soy results userfacebook", resolve)
+                    // if (error) throw error;
+                    // console.log('The solution is: ', results[0].solution);
+                });
+        })
+    },
+
+    userExistFacebook(id) {
+        return new Promise(resolve => {
+            connection.query(`SELECT * FROM users where facebookID = '${id}'`,
+                function (error, result) {
+                    resolve(result.length > 0)
+                    console.log("Soy el log de user exist", resolve(result.length > 0))
+                })
+        })
+    },
+
+
+
 }
+
+
+
+
 
 
 

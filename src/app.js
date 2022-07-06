@@ -21,6 +21,7 @@ app.use(express.json());
 
 app.post('/api/register', async (req, res) => {
     const userExist = await db.userExist(req.body.email);
+    console.log("Soy userExist", userExist)
     if (!userExist) {
         db.createUser(req.body).then((result) => {
             res.json({ id: result })
@@ -96,9 +97,6 @@ app.post('/api/codeValidator', async (req, res) => {
 });
 
 
-
-
-
 app.post('/api/contact_us', async (req, res) => {
     const contact_names = (req.body.name);
     const contact_subject = (req.body.subject);
@@ -117,3 +115,27 @@ app.post('/api/contact_us', async (req, res) => {
         res.status(422).json({ error: 'Formulario no enviado' })
     }
 });
+
+
+app.post('/api/facebook', async (req, res) => {
+    const name = (req.body.name);
+    const email = (req.body.email);
+    const id = (req.body.id);
+    console.log("Soy el nombre copiado en front", name)
+    console.log("Soy el mensaje en front", email)
+    console.log("Soy el mensaje en front", id)
+    const userExistFacebook = await db.userExistFacebook(id);
+    if (userExistFacebook == false) {
+        console.log("No existe")
+        const facebook = await db.userFacebook(name, email, id);
+        res.json({
+            user_id: facebook,
+        })
+    }
+    else {
+        res.status(422).json({ error: 'El usuario ya existe' })
+        console.log("ya existe")
+    }
+});
+
+
