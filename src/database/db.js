@@ -123,6 +123,7 @@ module.exports = {
         return new Promise(resolve => {
             connection.query(`SELECT * FROM users where facebookID = '${id}'`,
                 function (error, result) {
+                    console.log(result)
                     resolve(result.length > 0)
                     console.log("Soy el log de user exist", resolve(result.length > 0))
                 })
