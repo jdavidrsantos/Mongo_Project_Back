@@ -130,10 +130,20 @@ app.post('/api/facebook', async (req, res) => {
         const facebook = await db.userFacebook(name, email, id);
         res.json({
             user_id: facebook,
+            user_name: name,
+            user_email: email,
+            user_facebookID: id
         })
+        console.log("no existe")
     }
     else {
-        res.status(422).json({ error: 'El usuario ya existe' })
+        const user = await db.getUserByEmail(email);
+        res.json({
+            user_id: user.id,
+            user_name: name,
+            user_email: email,
+            user_facebookID: id
+        })
         console.log("ya existe")
     }
 });
