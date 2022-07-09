@@ -307,7 +307,7 @@ function createTemplate(user, code) {
                                 <tbody>
                                   <tr>
                                     <td align="center" valign="top" style="padding: 10px;">
-                                      <a href="#" style="text-decoration: none;"><img src="https://localhost:5501/LOGO/LOGO2_blanco.png" width="130" height="" alt="" style="height: auto; max-width: 100%; border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff; font-size: 14px;"></a>
+                                      <a href="#" style="text-decoration: none;"><img src="https://ilercon.co/LOGO/LOGO2_blanco.png" width="190" height="" alt="" style="height: auto; max-width: 100%; border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff; font-size: 14px;"></a>
                                     </td>
                                   </tr>
                                   <tr>
@@ -316,10 +316,10 @@ function createTemplate(user, code) {
                                         <tbody>
                                           <tr>
                                             <td valign="middle" style="padding: 10px;">
-                                              <a href="https://www.facebook.com/ilercon.leaders" style="text-decoration: none;"><img src="https://facebook-white.png" width="15" height="15" alt="" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff;"></a>
+                                              <a href="https://www.facebook.com/ilercon.leaders" style="text-decoration: none;"><img src="https://ilercon.co/LOGO/facebook-white.png" width="15" height="15" alt="" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff;"></a>
                                             </td>
                                             <td valign="middle" style="padding: 10px;">
-                                              <a href="https://www.instagram.com/ilercon.co/" style="text-decoration: none;"><img src="images/instagram-white.png" width="16" height="15" alt="" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff;"></a>
+                                              <a href="https://www.instagram.com/ilercon.co/" style="text-decoration: none;"><img src="https://ilercon.co/LOGO/instagram-white.png" width="16" height="15" alt="" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff;"></a>
                                             </td>
                                           </tr>
                                         </tbody>
