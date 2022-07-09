@@ -308,7 +308,7 @@ function createTemplate(user, code) {
                                 <tbody>
                                   <tr>
                                     <td align="center" valign="top" style="padding: 10px;">
-                                      <a href="#" style="text-decoration: none;"><img src="https://ilercon.co/LOGO/LOGO2_blanco.png" width="190" height="" alt="" style="height: auto; max-width: 100%; border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff; font-size: 14px;"></a>
+                                      <a href="https://ilercon.co" style="text-decoration: none;"><img src="https://ilercon.co/LOGO/LOGO2_blanco.png" width="190" height="" alt="" style="height: auto; max-width: 100%; border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff; font-size: 14px;"></a>
                                     </td>
                                   </tr>
                                   <tr>
