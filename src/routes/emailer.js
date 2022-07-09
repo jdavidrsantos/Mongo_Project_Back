@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 
 
 function sendPasswordCodeToEmail(user, code) {
+  console.log("por que no trae el user?", user)
   const content = createTemplate(user, code)
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
