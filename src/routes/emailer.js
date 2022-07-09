@@ -262,7 +262,7 @@ function createTemplate(user, code) {
 
                                 <tbody>
                                 <tr>
-                                <td class="pc-fb-font" style="font-family: 'Fira Sans', Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 300; line-height: 28px; color: #1B1B1B; letter-spacing: -0.2px;" valign="top" align="center">Nombre de Usuario : <strong>${user.name}</strong></td>
+                                <td class="pc-fb-font" style="font-family: 'Fira Sans', Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 300; line-height: 28px; color: #1B1B1B; letter-spacing: -0.2px;" valign="top" align="center">Nombre de Usuario : <strong>${user.name.toUpperCase()}</strong></td>
                                 </tr>
                                 <tr>
                                 <td class="pc-fb-font" style="font-family: 'Fira Sans', Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 300; line-height: 28px; color: #1B1B1B; letter-spacing: -0.2px;" valign="top" align="center">Correo : <strong>${user.email}</strong></td>
