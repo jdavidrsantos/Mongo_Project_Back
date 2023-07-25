@@ -19,9 +19,47 @@ app.use(express.json());
 // app.use(express.static(path.join(__dirname, 'public')));
 
 
+
+app.post('/api/searchAllProducts', async (req, res) => {
+    const searchAllProducts = await db.searchAllProducts();
+    console.log(searchAllProducts)
+    res.json({
+        searchAllProducts,
+    })
+})
+
+
+
+app.post('/api/deletingproductsAPI', async (req, res) => {
+    db.deletingproductsAPI();
+    res.json({
+        deletedAll: true,
+    })
+})
+
+
+
+app.post('/api/datosAPI', async (req, res) => {
+    const datosExist = await db.datosExist(req.body);
+    if (datosExist !== false) {
+        res.json({
+            duplicatedOrError: false,
+            added: true
+        })
+    } else {
+        res.json({
+            duplicatedOrError: true,
+            added: false
+        })
+    }
+})
+
+
+
+
 app.post('/api/register', async (req, res) => {
     const userExist = await db.userExist(req.body.email);
-    console.log("Soy userExist", userExist)
+
     if (!userExist) {
         db.createUser(req.body).then((result) => {
             res.json({ id: result })
@@ -69,8 +107,6 @@ app.post('/api/password_recovery', async (req, res) => {
             user_id: user.id,
         })
     }
-
-
     else {
         res.status(421).json({ error: 'User does not exits' })
         console.log('error')
