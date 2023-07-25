@@ -3,9 +3,9 @@ const mysql = require('mysql')
 // console.log({ user: process.env.DB_USER, db: process.env.DB_DATABASE, pass: process.env.DB_PASSWORD })
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'mysqlpw',
-    database: 'ilercon',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
     port: 3306
 })
 
@@ -16,7 +16,7 @@ const connection = mysql.createConnection({
 //     var sql = "CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))";
 //     connection.query(sql, function (err, result) {
 //         if (err) throw err;
-//         console.log("Table created");
+//         console.log("Table created"); 
 //     })
 // });
 
@@ -47,9 +47,6 @@ module.exports = {
                 })
         })
     },
-
-
-
 
 
     deletingproductsAPI() {

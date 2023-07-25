@@ -22,7 +22,6 @@ app.use(express.json());
 
 app.post('/api/searchAllProducts', async (req, res) => {
     const searchAllProducts = await db.searchAllProducts();
-    console.log(searchAllProducts)
     res.json({
         searchAllProducts,
     })
@@ -79,9 +78,7 @@ app.listen(port, () => {
 app.post('/api/login', function (request, response) {
     // Capture the input fields
     let username = request.body.name;
-    console.log("request", request)
     let password = request.body.password;
-
     db.login(username, password).then(result => {
         if (result !== false) {
             response.json(result)
