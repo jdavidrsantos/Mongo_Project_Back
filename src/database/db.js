@@ -9,26 +9,12 @@ const connection = mysql.createConnection({
     port: 3306
 })
 
-// connection.connect(function (err) {
-//     console.log('hi')
-//     if (err) throw err;
-//     console.log("Connected!");
-//     var sql = "CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))";
-//     connection.query(sql, function (err, result) {
-//         if (err) throw err;
-//         console.log("Table created"); 
-//     })
-// });
 
 connection.connect();
 
 
 
 module.exports = {
-
-
-
-
 
     searchAllProducts() {
         return new Promise(resolve => {
