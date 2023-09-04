@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
     collection: 'contact_us'
 }
 )
-module.exports=mongoose.model( 'User', userSchema )
+module.exports=mongoose.model( 'contact_us', userSchema )
 
 
 
