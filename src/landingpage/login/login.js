@@ -20,10 +20,10 @@ login.post('/authenticate', async (req, res) => {
         const token = jwt.sign({ userId: user._id, username: user.name }, secretKey, {
             expiresIn: '1h',
         });
-        res.json({ token, id: user._id });
+        res.json({ token, id: user._id, username: user.name });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Invalid user and password' });
     }
 });
 

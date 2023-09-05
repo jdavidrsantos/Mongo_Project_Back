@@ -12,7 +12,7 @@ contactUs.post('/contactus', async (req, res) => {
         try {
             await contactus(contact_names,contact_email, contact_phone, contact_message);
             mailerContact.sendPasswordCodeToEmail(contact_names,'', contact_email, contact_phone, contact_message);
-            res.json({ form: true });
+            res.json({ send: 'success' });
         } catch (error) {
             console.error(error.message);
             res.status(500).json({ error: 'Error processing the contact form' });
