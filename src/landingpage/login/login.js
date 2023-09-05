@@ -1,19 +1,20 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const login = express.Router();
-const authenticate = require('./loginSchema');
+const users = require('../user/userSchema');
 const crypto = require('crypto');
 const secretKey = crypto.randomBytes(32).toString('hex');
+const { comparePassword } = require('../utils/bcrypt');
 
 login.post('/authenticate', async (req, res) => {
     const { username, password } = req.body;
     try {
-        const user = await authenticate.findOne({ name: username });
-        const isUserValid = user.name === username;
+        const user = await users.findOne({ email: username });
+        const isUserValid = user.email === username;
         if (!isUserValid) {
             return res.status(401).json({ message: 'Invalid name' });
         }
-        const isPasswordValid = user.password === password;
+        const isPasswordValid = await comparePassword(password, user.password);
         if (!isPasswordValid) {
             return res.status(401).json({ message: 'Invalid password' });
         }
