@@ -28,6 +28,11 @@ const userSchema = new mongoose.Schema({
             lowercase: true,
             default: 'user'
         },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            immutable: true
+        }
     },
     {
         collection: 'users'

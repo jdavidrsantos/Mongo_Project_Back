@@ -1,33 +1,28 @@
 const express = require('express');
 const user = express.Router();
-const users = require('./userSchema');
+const User = require('./userSchema');
+
 const { hashPassword } = require('../utils/bcrypt');
-
-
 
 user.post('/createUser', async (req, res) => {
     const { name, password, email, role } = req.body;
     try {
-        const hashedPassword = await hashPassword(password)
-        await createUser( name, hashedPassword, email, role)
-        res.json({ name: name,email: email, role: role });
-    } catch (error) {
-        res.status(500).json({ message: 'El email ya existe' });
-    }
-});
+        const hashedPassword = await hashPassword(password);
 
-async function createUser( name, hashedPassword, email, role) {
-    try {
-        const user = new users({
+        const newUser = new User({
             name: name,
             password: hashedPassword,
             email: email,
             role: role,
         });
-        await user.save();
+        await newUser.save();
+        res.json({ name: name, email: email, role: role });
     } catch (error) {
-        throw error;
-    }
-}
+        if (error.code === 11000) {
+            res.status(400).json({ message: 'Email address is already in use.' });
+        } else {
+            res.status(500).json({ message: 'Error creating user: ' + error.message });
+        }}
+});
 
 module.exports = user;
