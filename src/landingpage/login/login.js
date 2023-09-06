@@ -2,9 +2,8 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const login = express.Router();
 const users = require('../user/userSchema');
-const crypto = require('crypto');
-const secretKey = crypto.randomBytes(32).toString('hex');
 const { comparePassword } = require('../utils/bcrypt');
+const secretKey = process.env.JWT_SECRET_KEY;
 
 login.post('/authenticate', async (req, res) => {
     const { username, password } = req.body;
