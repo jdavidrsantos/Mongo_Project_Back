@@ -8,7 +8,7 @@ const connectToDatabase = require('./mongoose');
 
 
 const corsOptions = {
-    origin: 'http://127.0.0.1:5173',
+    origin: 'https://localhost:5501',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     optionsSuccessStatus: 204,
 };
