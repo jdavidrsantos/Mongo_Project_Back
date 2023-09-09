@@ -5,7 +5,8 @@ const users = require('../user/userSchema');
 const { comparePassword, hashPassword} = require('../utils/bcrypt');
 const userFacebook = require("../user/userFacebookSchema");
 const secretKey = process.env.JWT_SECRET_KEY;
-
+const { OAuth2Client } = require("google-auth-library")
+const client = new OAuth2Client()
 
 login.post('/authenticate', async (req, res) => {
     const { username, password } = req.body;
@@ -54,5 +55,20 @@ login.post('/authenticateFacebook', async (req, res) => {
     }
 });
 
+login.post('/authenticateGoogle', async (req, res) => {
+    const {access_token } = req.body;
+    try {
+        client.setCredentials({ access_token: access_token })
+        const userinfo = await client.request({
+            url: "https://www.googleapis.com/oauth2/v3/userinfo",
+        });
+        console.log(userinfo.data);
+        res.json({ userinfo: userinfo.data });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Por favor, inténtelo de nuevo más tarde.' });
+    }
+});
 
 module.exports = login;
