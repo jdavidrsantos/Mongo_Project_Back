@@ -4,6 +4,7 @@ const login = express.Router();
 const users = require('../user/userSchema');
 const { comparePassword, hashPassword} = require('../utils/bcrypt');
 const userFacebook = require("../user/userFacebookSchema");
+const userGoogle = require("../user/userGoogleSchema");
 const secretKey = process.env.JWT_SECRET_KEY;
 const { OAuth2Client } = require("google-auth-library")
 const client = new OAuth2Client()
@@ -62,9 +63,26 @@ login.post('/authenticateGoogle', async (req, res) => {
         const userinfo = await client.request({
             url: "https://www.googleapis.com/oauth2/v3/userinfo",
         });
-        console.log(userinfo.data);
-        res.json({ userinfo: userinfo.data });
 
+        let user = await users.findOne({ userID: userinfo.data.sub});
+        let isNewUser = false;
+
+        if (user === null) {
+            const Google = new userGoogle({
+                name: userinfo.data.name,
+                userID: userinfo.data.sub,
+                picture: userinfo.data.picture,
+                email: userinfo.data.email,
+                emailVerified: userinfo.data.email_verified
+            });
+            await Google.save();
+            isNewUser = true;
+            user = Google;
+        }
+        const token = jwt.sign({ userId: user._id, username: user.name }, secretKey, {
+            expiresIn: '1h',
+        });
+        res.json({ token, id: user._id, username: user.name, role: user.role, newUser: isNewUser });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Por favor, inténtelo de nuevo más tarde.' });
