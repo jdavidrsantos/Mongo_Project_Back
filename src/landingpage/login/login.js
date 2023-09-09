@@ -2,8 +2,10 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const login = express.Router();
 const users = require('../user/userSchema');
-const { comparePassword } = require('../utils/bcrypt');
+const { comparePassword, hashPassword} = require('../utils/bcrypt');
+const userFacebook = require("../user/userFacebookSchema");
 const secretKey = process.env.JWT_SECRET_KEY;
+
 
 login.post('/authenticate', async (req, res) => {
     const { username, password } = req.body;
@@ -20,11 +22,37 @@ login.post('/authenticate', async (req, res) => {
         const token = jwt.sign({ userId: user._id, username: user.name }, secretKey, {
             expiresIn: '1h',
         });
-        res.json({ token, id: user._id, username: user.name });
+        res.json({ token, id: user._id, username: user.name, role: user.role });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Invalid user and password' });
     }
 });
+
+login.post('/authenticateFacebook', async (req, res) => {
+    const { username, userID, graphDomain } = req.body;
+    try {
+        let user = await users.findOne({ userID: userID });
+        let isNewUser = false;
+        if (user === null) {
+            const Facebook = new userFacebook({
+                name: username,
+                userID: userID,
+                graphDomain: graphDomain,
+            });
+            await Facebook.save();
+            isNewUser = true;
+            user = Facebook; // Set 'user' to the newly created user
+        }
+        const token = jwt.sign({ userId: user._id, username: user.name }, secretKey, {
+            expiresIn: '1h',
+        });
+        res.json({ token, id: user._id, username: user.name, role: user.role, newUser: isNewUser });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Por favor, inténtelo de nuevo más tarde.' });
+    }
+});
+
 
 module.exports = login;

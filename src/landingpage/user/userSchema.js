@@ -33,15 +33,9 @@ const userSchema = new mongoose.Schema({
             default: Date.now,
             immutable: true
         },
-        userID: {
-            type: String,
-            required: true,
-        },
-        accessToken:{
-            type: String
-        },
-        graphDomain: {
-            type: String
+        updatedAt: {
+            type: Date,
+            default: Date.now,
         }
     },
     {

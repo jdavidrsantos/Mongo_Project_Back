@@ -30,10 +30,9 @@ user.post('/createUser', async (req, res) => {
 user.post('/createUserFacebook', async (req, res) => {
     const { name, userID, graphDomain,role } = req.body;
     try {
-        const hashedPassword = await hashPassword(userID);
         const Facebook = new userFacebook({
             name: name,
-            userID: hashedPassword,
+            userID: userID,
             graphDomain: graphDomain,
             role: role,
         });
