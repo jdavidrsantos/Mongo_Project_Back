@@ -14,7 +14,6 @@ function connectToDatabase() {
 
     db.once('open', () => {
         console.log('Connected to MongoDB');
-        db.collection('users').createIndex({ email: 1 }, { unique: true });
     });
 }
 

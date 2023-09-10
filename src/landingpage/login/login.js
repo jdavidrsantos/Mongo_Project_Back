@@ -26,7 +26,6 @@ login.post('/authenticate', async (req, res) => {
         });
         res.json({ token, id: user._id, username: user.name, role: user.role });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ message: 'Invalid user and password' });
     }
 });
@@ -44,14 +43,13 @@ login.post('/authenticateFacebook', async (req, res) => {
             });
             await Facebook.save();
             isNewUser = true;
-            user = Facebook; // Set 'user' to the newly created user
+            user = Facebook;
         }
         const token = jwt.sign({ userId: user._id, username: user.name }, secretKey, {
             expiresIn: '1h',
         });
         res.json({ token, id: user._id, username: user.name, role: user.role, newUser: isNewUser });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ message: 'Por favor, inténtelo de nuevo más tarde.' });
     }
 });
@@ -63,7 +61,6 @@ login.post('/authenticateGoogle', async (req, res) => {
         const userinfo = await client.request({
             url: "https://www.googleapis.com/oauth2/v3/userinfo",
         });
-
         let user = await users.findOne({ userID: userinfo.data.sub});
         let isNewUser = false;
 
@@ -72,7 +69,7 @@ login.post('/authenticateGoogle', async (req, res) => {
                 name: userinfo.data.name,
                 userID: userinfo.data.sub,
                 picture: userinfo.data.picture,
-                email: userinfo.data.email,
+                emailGoogle: userinfo.data.email,
                 emailVerified: userinfo.data.email_verified
             });
             await Google.save();
@@ -84,7 +81,6 @@ login.post('/authenticateGoogle', async (req, res) => {
         });
         res.json({ token, id: user._id, username: user.name, role: user.role, newUser: isNewUser });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ message: 'Por favor, inténtelo de nuevo más tarde.' });
     }
 });

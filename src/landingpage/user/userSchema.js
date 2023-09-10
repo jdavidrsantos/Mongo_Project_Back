@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true,
             lowercase: true,
-            unique: true
+            unique: true,
+            sparse:true
         },
         password: {
             type: String,
@@ -36,10 +37,10 @@ const userSchema = new mongoose.Schema({
         updatedAt: {
             type: Date,
             default: Date.now,
-        }
+        },
     },
     {
         collection: 'users'
     }
 )
-module.exports=mongoose.model( 'UsersNormal', userSchema )
+module.exports=mongoose.model( 'UserNormal', userSchema )
