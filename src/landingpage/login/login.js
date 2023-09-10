@@ -8,6 +8,7 @@ const userGoogle = require("../user/userGoogleSchema");
 const secretKey = process.env.JWT_SECRET_KEY;
 const { OAuth2Client } = require("google-auth-library")
 const client = new OAuth2Client()
+const authenticateToken = require('../utils/authenticateToken');
 
 login.post('/authenticate', async (req, res) => {
     const { username, password } = req.body;
@@ -28,6 +29,10 @@ login.post('/authenticate', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Invalid user and password' });
     }
+});
+
+login.post('/validateUserToken', authenticateToken, (req, res) => {
+    res.status(200).json({ message: 'Authenticated', user: req.user });
 });
 
 login.post('/authenticateFacebook', async (req, res) => {
