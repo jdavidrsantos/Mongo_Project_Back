@@ -2,7 +2,6 @@ const nodemailer = require('nodemailer');
 
 
 function sendPasswordCodeToEmail(user, code) {
-  console.log("por que no trae el user?", user)
   const content = createTemplate(user, code)
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -23,7 +22,6 @@ function sendPasswordCodeToEmail(user, code) {
 
   //3RD STEP
   transporter.sendMail(mailOptions, function (err, data) {
-    console.log(data)
     if (err) {
       console.log('error occurs', err);
     } else {
@@ -317,10 +315,10 @@ function createTemplate(user, code) {
                                         <tbody>
                                           <tr>
                                             <td valign="middle" style="padding: 10px;">
-                                              <a href="https://www.facebook.com/ilercon.leaders" style="text-decoration: none;"><img src="https://ilercon.co/LOGO/facebook-white.png" width="15" height="15" alt="" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff;"></a>
+                                              <a href="https://www.facebook.com/ilercon.leaders" style="text-decoration: none;"><img src="https://ilercon.co/images/landingpage/facebook-white.png" width="15" height="15" alt="" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff;"></a>
                                             </td>
                                             <td valign="middle" style="padding: 10px;">
-                                              <a href="https://www.instagram.com/ilercon.co/" style="text-decoration: none;"><img src="https://ilercon.co/LOGO/instagram-white.png" width="16" height="15" alt="" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff;"></a>
+                                              <a href="https://www.instagram.com/ilercon.co" style="text-decoration: none;"><img src="https://ilercon.co/images/landingpage/instagram-white.png" width="16" height="15" alt="" style="border: 0; line-height: 100%; outline: 0; -ms-interpolation-mode: bicubic; color: #ffffff;"></a>
                                             </td>
                                           </tr>
                                         </tbody>

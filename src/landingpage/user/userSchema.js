@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
             lowercase: true,
             default: 'user'
         },
+            recoverCode: {
+                type: String,
+                default: null
+            },
         createdAt: {
             type: Date,
             default: Date.now,
