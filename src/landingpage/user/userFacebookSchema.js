@@ -11,6 +11,10 @@ const userSchema = new mongoose.Schema({
             unique: true,
             sparse:true
         },
+        status: {
+            type: String,
+            default: 'active',
+        },
         graphDomain: {
             type: String
         },

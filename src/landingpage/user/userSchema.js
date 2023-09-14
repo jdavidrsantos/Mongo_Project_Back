@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
+        seq: {
+            type: Number,
+            unique: true,
+        },
         name: {
             type: String,
             required: true,
@@ -28,6 +32,10 @@ const userSchema = new mongoose.Schema({
             type: String,
             lowercase: true,
             default: 'user'
+        },
+        status: {
+            type: String,
+            default: 'active',
         },
             recoverCode: {
                 type: String,

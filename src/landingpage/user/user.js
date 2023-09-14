@@ -6,27 +6,30 @@ const userGoogle = require("../user/userGoogleSchema");
 const { OAuth2Client } = require("google-auth-library")
 const client = new OAuth2Client()
 const { hashPassword } = require('../utils/bcrypt');
-
+const counterModel = require('./counterSchema');
 
 user.post('/createUser', async (req, res) => {
     const { name, password, email } = req.body;
     try {
         const hashedPassword = await hashPassword(password);
-        const newUser = new UserNormal({
-            name: name,
-            password: hashedPassword,
-            email: email,
-        });
-        await newUser.save();
-        res.json({ username: newUser.name, email: newUser.email, role: newUser.role });
-    } catch (error) {
-        if (error.code === 11000) {
-            res.status(400).json({message: `${email} ya estas registrad@`});
-        } else {
-            res.status(500).json({ message: 'Error creating user: ' + error.message });
-        }}
+         const newUser = new UserNormal({
+             name: name,
+             password: hashedPassword,
+             email: email,
+         });
+         await newUser.save();
+            const seq = await incrementSequence();
+            console.log('seq',seq)
+            newUser.seq = seq
+         res.json({ username: newUser.name, email: newUser.email, role: newUser.role });
+     } catch (error) {
+         if (error.code === 11000) {
+             res.status(400).json({message: `${email} ya estas registrad@`});
+         } else {
+             res.status(500).json({ message: 'Error creating user: ' + error.message });
+        }
+}
 });
-
 
 user.post('/createUserFacebook', async (req, res) => {
     const { name, userID, graphDomain } = req.body;
@@ -70,5 +73,17 @@ user.post('/createUserGoogle', async (req, res) => {
             res.status(500).json({ message: 'Error creating user: ' + error.message });
         }}
 });
+async function incrementSequence() {
+    const countersCollection = counterModel.collection;
+    let sequenceDocument = await countersCollection.findOne({ id: 'users_seq' });
+    if (!sequenceDocument) {
+        await countersCollection.insertOne({ id: 'users_seq', seq: 1 });
+        return 1;
+    } else {
+        await countersCollection.updateOne({ id: 'users_seq' }, { $inc: { seq: 1 } });
+        sequenceDocument = await countersCollection.findOne({ id: 'users_seq' });
+    }
+    return sequenceDocument.seq;
+}
 
 module.exports = user;
