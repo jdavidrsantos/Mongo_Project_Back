@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema({
             required: true,
             lowercase: true
         },
+        seq: {
+            type: Number,
+            unique: true,
+        },
         userID: {
             type: String,
             required: true,

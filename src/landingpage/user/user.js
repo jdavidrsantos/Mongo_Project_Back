@@ -18,13 +18,9 @@ user.post('/createUser', async (req, res) => {
              email: email,
          });
          await newUser.save();
-
         const seq = await incrementSequence();
-
-        // Update the user's seq field
         newUser.seq = seq;
         await newUser.save();
-
          res.json({ username: newUser.name, email: newUser.email, role: newUser.role });
      } catch (error) {
          if (error.code === 11000) {
@@ -45,6 +41,9 @@ user.post('/createUserFacebook', async (req, res) => {
         });
         await Facebook.save();
        const user=Facebook
+        const seq = await incrementSequence();
+        Facebook.seq = seq;
+        await Facebook.save();
         res.json({ username: user.name, role: user.role });
     } catch (error) {
         if (error.code === 11000) {
@@ -69,6 +68,9 @@ user.post('/createUserGoogle', async (req, res) => {
                 emailVerified: userinfo.data.email_verified
             });
             await Google.save();
+        const seq = await incrementSequence();
+        Google.seq = seq;
+        await Google.save();
         res.json({ username: Google.name, role: Google.role });
     } catch (error) {
         if (error.code === 11000) {
