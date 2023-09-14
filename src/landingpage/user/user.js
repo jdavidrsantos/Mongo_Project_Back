@@ -18,9 +18,13 @@ user.post('/createUser', async (req, res) => {
              email: email,
          });
          await newUser.save();
-            const seq = await incrementSequence();
-            console.log('seq',seq)
-            newUser.seq = seq
+
+        const seq = await incrementSequence();
+
+        // Update the user's seq field
+        newUser.seq = seq;
+        await newUser.save();
+
          res.json({ username: newUser.name, email: newUser.email, role: newUser.role });
      } catch (error) {
          if (error.code === 11000) {
