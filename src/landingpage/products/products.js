@@ -1,7 +1,6 @@
 const express = require('express');
 const contactUs = express.Router();
 const contactUsSchema = require('./contactUsSchema');
-const mailerContact = require('./emailContact')
 
 contactUs.post('/contactus', async (req, res) => {
     const contact_names = req.body.username;
@@ -11,7 +10,6 @@ contactUs.post('/contactus', async (req, res) => {
     if (contact_names !== '' && contact_email !== '' && contact_phone !== '' && contact_message !== '') {
         try {
             await contactus(contact_names,contact_email, contact_phone, contact_message);
-            mailerContact.sendPasswordCodeToEmail(contact_names,'', contact_email, contact_phone, contact_message);
             res.json({ send: 'success' });
         } catch (error) {
             console.error(error.message);
