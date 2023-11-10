@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 function connectToDatabase() {
-    mongoose.connect('mongodb://localhost:27017/ilercon', {
+    mongoose.connect('mongodb://localhost:27017/infocenter', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });

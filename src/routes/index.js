@@ -1,15 +1,5 @@
-const contactUs = require("../landingpage/contactUs/contactUs");
-const login = require("../landingpage/login/login");
-const user = require("../landingpage/user/user");
-const recoverPassword = require("../landingpage/recover/recover");
-
-
-
+const products = require("../landingpage/products/products");
 function routerApi(app) {
-    app.use('/api/landingpage', contactUs);
-    app.use('/api/landingpage', login);
-    app.use('/api/landingpage', user);
-    app.use('/api/landingpage', recoverPassword);
+    app.use('/api/', products);
 }
-
 module.exports = routerApi;

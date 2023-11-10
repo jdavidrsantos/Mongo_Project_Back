@@ -1,36 +1,52 @@
 const express = require('express');
-const contactUs = express.Router();
-const contactUsSchema = require('./contactUsSchema');
+const products = express.Router();
+const productsSchema = require('./productsSchema');
 
-contactUs.post('/contactus', async (req, res) => {
-    const contact_names = req.body.username;
-    const contact_email = req.body.email;
-    const contact_phone = req.body.tel;
-    const contact_message = req.body.message;
-    if (contact_names !== '' && contact_email !== '' && contact_phone !== '' && contact_message !== '') {
-        try {
-            await contactus(contact_names,contact_email, contact_phone, contact_message);
-            res.json({ send: 'success' });
-        } catch (error) {
-            console.error(error.message);
-            res.status(500).json({ error: 'Error processing the contact form' });
+products.post('/add_products_mongo', async (req, res) => {
+    try {
+        const productDataArray = req.body;
+        if (productDataArray && productDataArray.length > 0) {
+            for (const productData of productDataArray) {
+                const { id, title, price, description, category, image, rating } = productData;
+                const newProduct = new productsSchema({
+                    id,
+                    title,
+                    price,
+                    description,
+                    category,
+                    image,
+                    rating,
+                });
+                await newProduct.save();
+            }
+            return res.json({ added: true });
+        } else {
+            return res.status(400).json({ error: 'No products data provided' });
         }
-    } else {
-        res.status(422).json({ error: 'Formulario no enviado' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Error saving products to the database' });
     }
 });
 
-async function contactus(contact_names, contact_email, contact_phone, contact_message) {
+products.post('/delete_products_mongo', async (req, res) => {
     try {
-        const contactusData = new contactUsSchema({
-            name: contact_names,
-            email: contact_email,
-            phone: contact_phone,
-            message: contact_message
-        });
-        await contactusData.save();
+        await productsSchema.deleteMany({});
+        return res.json({ deleted: true });
     } catch (error) {
-        throw error;
+        return res.status(500).json({ error: 'Error deleting products from the database' });
     }
-}
-module.exports = contactUs;
+});
+
+
+products.get('/search_products_mongo', async (req, res) => {
+    try {
+        const allProducts = await productsSchema.find();
+        return res.json(allProducts);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Error searching products in the database' });
+    }
+});
+
+module.exports = products;

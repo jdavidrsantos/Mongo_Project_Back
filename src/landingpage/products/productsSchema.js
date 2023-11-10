@@ -1,49 +1,52 @@
 const mongoose = require('mongoose')
-const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
+const productsSchema = new mongoose.Schema({
+    id: {
+        type: Number,
         required: true,
-        lowercase: true
     },
-    email: {
+    title: {
         type: String,
-        required: true,
-        lowercase: true,
-        minLength: 5,
-        validate: {
-            validator: function (value) {
-                return value.includes('@');
-            },
-            message: 'Email must contain the "@" symbol'
-        }
+        required: false,
     },
-    phone:{
+    price:{
         type: Number,
         min: 1,
     },
-    password: String,
+    description: String,
+    category: String,
+
+    image: {
+            type: String,
+            required: true,
+            validate: {
+                validator: function (value) {
+                    return value.includes('https://');
+                },
+                message: 'Image must contain "https" '
+            }
+            },
+
+    rating: {
+            type: Object
+            },
+
     createdAt: {
         type: Date,
         default: Date.now,
         immutable: true
     },
+
     updatedAt: {
         type: Date,
         default: Date.now,
         immutable: true
     },
-    subject: {
-        type: String
-    },
-    message: {
-        type: String
-    }
 },
 {
-    collection: 'contact_us'
+    collection: 'products'
 }
 )
-module.exports=mongoose.model( 'contact_us', userSchema )
+module.exports=mongoose.model( 'products', productsSchema )
 
 
 

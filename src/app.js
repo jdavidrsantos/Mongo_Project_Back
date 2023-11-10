@@ -1,14 +1,14 @@
 require('dotenv').config();
 const express = require('express')
 const app = express();
-const port = 3109;
+const port = 3110;
 const cors = require('cors')
 const routerApi=require('./routes')
 const connectToDatabase = require('./mongoose');
 
 
 const corsOptions = {
-    origin: 'https://localhost:5501',
+    origin: 'http://localhost:8081',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     optionsSuccessStatus: 204,
 };
