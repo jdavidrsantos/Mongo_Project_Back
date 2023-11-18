@@ -7,7 +7,7 @@ const routerApi=require('./routes')
 const connectToDatabase = require('./mongoose');
 
 const corsOptions = {
-    origin: 'https://jdavidrsantos.github.io/Mongo_Project/#/',
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     optionsSuccessStatus: 204,
 };
