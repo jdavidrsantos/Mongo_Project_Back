@@ -4,8 +4,7 @@ const app = express();
 const port = 3110;
 const cors = require('cors')
 const routerApi=require('./routes')
-//const connectToDatabase = require('./mongoose');
-//changes
+const connectToDatabase = require('./mongoose');
 
 const corsOptions = {
     origin: 'http://localhost:8081',
@@ -19,7 +18,7 @@ app.get('/', (req, res) => {
 
 app.use(cors(corsOptions))
 app.use(express.json())
-// connectToDatabase();
+connectToDatabase();
 routerApi(app)
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);

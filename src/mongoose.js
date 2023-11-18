@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
+const mongoURI = process.env.MONGODB_URI;
 function connectToDatabase() {
-    mongoose.connect('mongodb://localhost:27017/infocenter', {
+    mongoose.connect(mongoURI, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
