@@ -48,5 +48,5 @@ products.get('/search_products_mongo', async (req, res) => {
         return res.status(500).json({ error: 'Error searching products in the database' });
     }
 });
-
+//test
 module.exports = products;
