@@ -1,7 +1,7 @@
 {
-  "name": "ilercon_back",
+  "name": "infocenter_back",
   "version": "1.0.0",
-  "description": "ilercon backend",
+  "description": "infocenter backend",
   "main": "app.js",
   "scripts": {
     "serve": "nodemon src/app.js"
