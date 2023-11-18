@@ -41,7 +41,7 @@ products.post('/delete_products_mongo', async (req, res) => {
 
 products.get('/search_products_mongo', async (req, res) => {
     try {
-        const allProducts = await productsSchema.find().maxTimeMS(30000);;
+        const allProducts = await productsSchema.find().maxTimeMS(30000);
         return res.json(allProducts);
     } catch (error) {
         console.error(error);
